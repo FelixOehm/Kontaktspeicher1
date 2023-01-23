@@ -1,0 +1,51 @@
+﻿<Window x:Class="Kontaktspeicher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kontaktspeicher"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="Black">
+            <Label>
+                <Image Source="/img/logo.png" Height="32"/>
+            </Label>
+            <Label FontSize="24" Foreground="White">Kontakte</Label>
+            <Label FontSize="6" Foreground="White" VerticalAlignment="Bottom">by Felix Oehm</Label>
+        </StackPanel>
+
+        <StackPanel x:Name="kontaktPanel" Grid.Row="1" Background="LightGray">
+            <Label>Gespeicherte Kontakte:</Label>
+            <Button Click="NewButton_Click">Neuer Kontakt</Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Label>Vorname:</Label>
+            <TextBox x:Name="vornameTextBox" Margin="5, 0"/>
+            
+            <Label>Nachname:</Label>
+            <TextBox x:Name="nachnameTextBox" Margin="5, 0"/>
+            
+            <Label>Geschlecht:</Label>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="mRadioButton" Checked="GeschlechtRadioButton_Checked" GroupName="geschlecht" Margin="5, 0">Mann</RadioButton>
+                <RadioButton x:Name="wRadioButton" Checked="GeschlechtRadioButton_Checked" GroupName="geschlecht" Margin="10, 0">Frau</RadioButton>
+            </StackPanel>
+
+            <Button x:Name="safeButton" Click="SafeButton_Click" IsEnabled="False" Width="100" HorizontalAlignment="Left" Margin="5">Speichern</Button>
+
+            <Button x:Name="deleteButton" Click="DeleteButton_Click" IsEnabled="False" Width="100" HorizontalAlignment="Left" Margin="5">Löschen</Button>
+        </StackPanel>
+    </Grid>
+</Window>
