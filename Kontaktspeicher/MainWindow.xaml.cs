@@ -92,11 +92,8 @@ namespace Kontaktspeicher
             kontakte.Add(zwischenkontakt);
 
             //Speicherung der Kontakttaten
-            
-            using (FileStream kontaktStreamz = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Write))
-            {
-            saveFormater.Serialize(kontaktStreamz, kontakte);
-            }
+
+            SaveKontakte();
             
 
             //Erzeigen eines KontaktButtons
@@ -178,6 +175,15 @@ namespace Kontaktspeicher
             {
                 deleteButton.IsEnabled = false;
             }
+
+            //Speicherung der Kontakttaten
+
+            SaveKontakte();
+        }
+
+        public void SaveKontakte()
+        {
+            //Speicherung der Kontakttaten
 
             using (FileStream kontaktStreamz = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Write))
             {
