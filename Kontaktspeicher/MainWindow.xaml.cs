@@ -33,7 +33,7 @@ namespace Kontaktspeicher
 
             string fileContent;
 
-            using (StreamReader checkstream = new StreamReader(@"C:\Users\felix oehm\Desktop\C# Referenzen\WPF Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt"))
+            using (StreamReader checkstream = new StreamReader(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt"))
             {
                 fileContent = checkstream.ReadToEnd();
             }
@@ -41,7 +41,7 @@ namespace Kontaktspeicher
             saveFormater = new BinaryFormatter();
             if (fileContent != "")
             {
-                using (FileStream kontaktStream = new FileStream(@"C:\Users\felix oehm\Desktop\C# Referenzen\WPF Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Read))
+                using (FileStream kontaktStream = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Read))
                 {
                     kontakte = (List<Kontakt>)saveFormater.Deserialize(kontaktStream);
                     for (int i = 0; i < kontakte.Count; i++)
@@ -93,7 +93,7 @@ namespace Kontaktspeicher
 
             //Speicherung der Kontakttaten
             
-            using (FileStream kontaktStreamz = new FileStream(@"C:\Users\felix oehm\Desktop\C# Referenzen\WPF Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Write))
+            using (FileStream kontaktStreamz = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Write))
             {
             saveFormater.Serialize(kontaktStreamz, kontakte);
             }
@@ -177,6 +177,11 @@ namespace Kontaktspeicher
             if (deleteCount == 0)
             {
                 deleteButton.IsEnabled = false;
+            }
+
+            using (FileStream kontaktStreamz = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Write))
+            {
+                saveFormater.Serialize(kontaktStreamz, kontakte);
             }
         }
     }
