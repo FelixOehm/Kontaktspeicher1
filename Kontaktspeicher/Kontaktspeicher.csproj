@@ -96,7 +96,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="txtdata\kontakte.txt" />
+    <Resource Include="txtdata\contacts.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\logo.png" />

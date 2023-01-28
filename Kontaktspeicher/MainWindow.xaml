@@ -37,7 +37,7 @@
             <Label>Lastname:</Label>
             <TextBox x:Name="LastnameTextBox" Margin="5, 0"/>
             
-            <Label>Genter:</Label>
+            <Label>Gender:</Label>
             <StackPanel Orientation="Horizontal">
                 <RadioButton x:Name="MRadioButton" Checked="GenderRadioButton_Checked" GroupName="Gender" Margin="5, 0">Male</RadioButton>
                 <RadioButton x:Name="FRadioButton" Checked="GenderRadioButton_Checked" GroupName="Gender" Margin="10, 0">Female</RadioButton>

@@ -20,10 +20,10 @@ namespace Kontaktspeicher
 
     public partial class MainWindow : Window
     {
-        List<Contact> contact = new List<Contact>();
-        List<Button> contactButton = new List<Button>();
-        public int deleteCount { get; set; }
-        BinaryFormatter saveFormater;
+        List<Contact> Contact = new List<Contact>();
+        List<Button> ContactButton = new List<Button>();
+        public int ClearCount;
+        BinaryFormatter SaveFormater;
 
         public MainWindow()
         {
@@ -31,27 +31,27 @@ namespace Kontaktspeicher
 
             string fileContent;
 
-            using (StreamReader checkstream = new StreamReader(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt"))
+            using (StreamReader checkstream = new StreamReader(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\contacts.txt"))
             {
                 fileContent = checkstream.ReadToEnd();
             }
 
-            saveFormater = new BinaryFormatter();
+            SaveFormater = new BinaryFormatter();
             if (fileContent != "")
             {
-                using (FileStream ContactStream = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Read))
+                using (FileStream ContactStream = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\contacts.txt", FileMode.Open, FileAccess.Read))
                 {
-                    contact = (List<Contact>)saveFormater.Deserialize(ContactStream);
-                    for (int i = 0; i < contact.Count; i++)
+                    Contact = (List<Contact>)SaveFormater.Deserialize(ContactStream);
+                    for (int i = 0; i < Contact.Count; i++)
                     {
                         //generate new ContactButtons
                         Button BetweenButton = new Button();
-                        BetweenButton.Content = contact[i].firstName + " " + contact[i].lastName;
+                        BetweenButton.Content = Contact[i].FirstName + " " + Contact[i].LastName;
                         BetweenButton.Click += ContactButton_Click;
 
                         //Zuweisen des KontaktButtons der Liste
-                        contactButton.Add(BetweenButton);
-                        ContactPanel.Children.Add(contactButton[contact[i].contactNumber]);
+                        ContactButton.Add(BetweenButton);
+                        ContactPanel.Children.Add(ContactButton[Contact[i].ContactNumber]);
                     }
                 }
             }
@@ -64,30 +64,30 @@ namespace Kontaktspeicher
             Contact intermediateContact = new Contact();
 
             //Zuweisen der KontaktNummer
-            intermediateContact.contactNumber = contact.Count;
+            intermediateContact.ContactNumber = Contact.Count;
 
             //Zuweisen des Vornamens
-            intermediateContact.firstName = FirstnameTextBox.Text;
+            intermediateContact.FirstName = FirstnameTextBox.Text;
 
             //Zuweisen des Nachnamens
-            intermediateContact.lastName = LastnameTextBox.Text;
+            intermediateContact.LastName = LastnameTextBox.Text;
 
             //Zuweisen des Geschlechts
             if(MRadioButton.IsChecked == true)
             {
-                intermediateContact.gender = 1;
+                intermediateContact.Gender = 1;
             }
             else if(FRadioButton.IsChecked == true)
             {
-                intermediateContact.gender = 2;
+                intermediateContact.Gender = 2;
             }
             else
             {
-                intermediateContact.gender = 0;
+                intermediateContact.Gender = 0;
             }
 
             //Einfügen des Zwischenkontakts in die Kontaktliste
-            contact.Add(intermediateContact);
+            Contact.Add(intermediateContact);
 
             //save contact data
 
@@ -96,14 +96,14 @@ namespace Kontaktspeicher
 
             //Erzeigen eines KontaktButtons
             Button zwischenButton = new Button();
-            zwischenButton.Content = intermediateContact.firstName + " " + intermediateContact.lastName;
+            zwischenButton.Content = intermediateContact.FirstName + " " + intermediateContact.LastName;
             zwischenButton.Click += ContactButton_Click;
 
             //Zuweisen des KontaktButtons der Liste
-            contactButton.Add(zwischenButton);
-            ContactPanel.Children.Add(contactButton[intermediateContact.contactNumber]);
+            ContactButton.Add(zwischenButton);
+            ContactPanel.Children.Add(ContactButton[intermediateContact.ContactNumber]);
 
-            deleteCount = intermediateContact.contactNumber;
+            ClearCount = intermediateContact.ContactNumber;
             ClearButton.IsEnabled = true;
         }
 
@@ -127,26 +127,26 @@ namespace Kontaktspeicher
         //load contact from ContactButton
         private void ContactButton_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < contactButton.Count; i++)
+            for(int i = 0; i < ContactButton.Count; i++)
             {
-                if (sender == contactButton[i])
+                if (sender == ContactButton[i])
                 {
                     LoadContact(i);
                 }
             }
         }
 
-        //LoadContact methode
+        //method LoadContact
         public void LoadContact(int index)
         {
-            FirstnameTextBox.Text = contact[index].firstName;
-            LastnameTextBox.Text = contact[index].lastName;
-            if(contact[index].gender == 1)
+            FirstnameTextBox.Text = Contact[index].FirstName;
+            LastnameTextBox.Text = Contact[index].LastName;
+            if(Contact[index].Gender == 1)
             {
                 MRadioButton.IsChecked = true;
                 FRadioButton.IsChecked = false;
             }
-            else if(contact[index].gender == 2)
+            else if(Contact[index].Gender == 2)
             {
                 MRadioButton.IsChecked = false;
                 FRadioButton.IsChecked = true;
@@ -157,50 +157,50 @@ namespace Kontaktspeicher
                 FRadioButton.IsChecked = false;
             }
 
-            deleteCount = index;
+            ClearCount = index;
             ClearButton.IsEnabled = true;
         }
 
-        //Kontakte löschen
+        //clear Contact
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("deleteCount: " + deleteCount);
-            ContactPanel.Children.Remove(contactButton[deleteCount]);
-            contactButton.Remove(contactButton[deleteCount]);
-            contact.Remove(contact[deleteCount]);
+            Console.WriteLine("deleteCount: " + ClearCount);
+            ContactPanel.Children.Remove(ContactButton[ClearCount]);
+            ContactButton.Remove(ContactButton[ClearCount]);
+            Contact.Remove(Contact[ClearCount]);
 
-            if (deleteCount > 0)
+            if (ClearCount > 0)
             {
-                deleteCount--;
+                ClearCount--;
             }
             else
             {
                 ClearButton.IsEnabled = false;
             }
 
-            //save contact data
+            //SaveContact
 
             SaveContact();
         }
 
-        //save contact method
+        //method SaveContact
         public void SaveContact()
         {
-            using (FileStream kontaktStreamz = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\kontakte.txt", FileMode.Open, FileAccess.Write))
+            using (FileStream kontaktStreamz = new FileStream(@"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\contacts.txt", FileMode.Open, FileAccess.Write))
             {
-                saveFormater.Serialize(kontaktStreamz, contact);
+                SaveFormater.Serialize(kontaktStreamz, Contact);
             }
         }
     }
 
-    //Kontakt Klasse
+    //class Contact
     [Serializable]
     public class Contact
     {
-        public int contactNumber { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public byte gender { get; set; }
+        public int ContactNumber { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public byte Gender { get; set; }
     }
 
     
