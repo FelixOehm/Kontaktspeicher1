@@ -21,31 +21,31 @@
             <Label>
                 <Image Source="/img/logo.png" Height="32"/>
             </Label>
-            <Label FontSize="24" Foreground="White">Kontakte</Label>
+            <Label FontSize="24" Foreground="White">Contacts</Label>
             <Label FontSize="6" Foreground="White" VerticalAlignment="Bottom">by Felix Oehm</Label>
         </StackPanel>
 
-        <StackPanel x:Name="kontaktPanel" Grid.Row="1" Background="LightGray">
-            <Label>Gespeicherte Kontakte:</Label>
-            <Button Click="NewButton_Click">Neuer Kontakt</Button>
+        <StackPanel x:Name="ContactPanel" Grid.Row="1" Background="LightGray">
+            <Label>Saved Contacts:</Label>
+            <Button Click="NewButton_Click">New Contact</Button>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label>Vorname:</Label>
-            <TextBox x:Name="vornameTextBox" Margin="5, 0"/>
+            <Label>Firstname:</Label>
+            <TextBox x:Name="FirstnameTextBox" Margin="5, 0"/>
             
-            <Label>Nachname:</Label>
-            <TextBox x:Name="nachnameTextBox" Margin="5, 0"/>
+            <Label>Lastname:</Label>
+            <TextBox x:Name="LastnameTextBox" Margin="5, 0"/>
             
-            <Label>Geschlecht:</Label>
+            <Label>Genter:</Label>
             <StackPanel Orientation="Horizontal">
-                <RadioButton x:Name="mRadioButton" Checked="GeschlechtRadioButton_Checked" GroupName="geschlecht" Margin="5, 0">Mann</RadioButton>
-                <RadioButton x:Name="wRadioButton" Checked="GeschlechtRadioButton_Checked" GroupName="geschlecht" Margin="10, 0">Frau</RadioButton>
+                <RadioButton x:Name="MRadioButton" Checked="GenderRadioButton_Checked" GroupName="Gender" Margin="5, 0">Male</RadioButton>
+                <RadioButton x:Name="FRadioButton" Checked="GenderRadioButton_Checked" GroupName="Gender" Margin="10, 0">Female</RadioButton>
             </StackPanel>
 
-            <Button x:Name="safeButton" Click="SafeButton_Click" IsEnabled="False" Width="100" HorizontalAlignment="Left" Margin="5">Speichern</Button>
+            <Button x:Name="SafeButton" Click="SafeButton_Click" IsEnabled="False" Width="100" HorizontalAlignment="Left" Margin="5">Save</Button>
 
-            <Button x:Name="deleteButton" Click="DeleteButton_Click" IsEnabled="False" Width="100" HorizontalAlignment="Left" Margin="5">Löschen</Button>
+            <Button x:Name="ClearButton" Click="ClearButton_Click" IsEnabled="False" Width="100" HorizontalAlignment="Left" Margin="5">Clear</Button>
         </StackPanel>
     </Grid>
 </Window>
