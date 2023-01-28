@@ -14,13 +14,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Reflection;
 
 namespace Kontaktspeicher
 {
 
     public partial class MainWindow : Window
     {
-        string Savefile = @"D:\Projekte\Kontaktspeicher\Kontaktspeicher\txtdata\contacts.txt";
+        string Savefile = @"..\..\txtdata\contacts.txt";
 
         ContactControl Controler = new ContactControl();
 
@@ -32,24 +33,30 @@ namespace Kontaktspeicher
         public MainWindow()
         {
             InitializeComponent();
+
             
+
             SaveFormater = new BinaryFormatter();
 
-            using (FileStream ContactStream = new FileStream(Savefile, FileMode.Open, FileAccess.Read))
+            if (Controler.CheckFileContent(Savefile) != "")
             {
-                Contacts = (List<Contact>)SaveFormater.Deserialize(ContactStream);
-                for (int i = 0; i < Contacts.Count; i++)
+                using (FileStream ContactStream = new FileStream(Savefile, FileMode.Open, FileAccess.Read))
                 {
-                    //generate new ContactButtons
-                    Button BetweenButton = new Button();
-                    BetweenButton.Content = Contacts[i].FirstName + " " + Contacts[i].LastName;
-                    BetweenButton.Click += ContactButton_Click;
+                    Contacts = (List<Contact>)SaveFormater.Deserialize(ContactStream);
+                    for (int i = 0; i < Contacts.Count; i++)
+                    {
+                        //generate new ContactButtons
+                        Button BetweenButton = new Button();
+                        BetweenButton.Content = Contacts[i].FirstName + " " + Contacts[i].LastName;
+                        BetweenButton.Click += ContactButton_Click;
 
-                    //Zuweisen des KontaktButtons der Liste
-                    ContactButton.Add(BetweenButton);
-                    ContactPanel.Children.Add(ContactButton[Contacts[i].ContactNumber]);
+                        //Zuweisen des KontaktButtons der Liste
+                        ContactButton.Add(BetweenButton);
+                        ContactPanel.Children.Add(ContactButton[Contacts[i].ContactNumber]);
+                    }
                 }
             }
+            
         }
 
         //SafeButton_Click
@@ -126,6 +133,8 @@ namespace Kontaktspeicher
                 if (sender == ContactButton[i])
                 {
                     LoadContact(i);
+                    ClearCount = i;
+                    ClearButton.IsEnabled = true;
                 }
             }
         }
@@ -135,24 +144,22 @@ namespace Kontaktspeicher
         {
             FirstnameTextBox.Text = Contacts[index].FirstName;
             LastnameTextBox.Text = Contacts[index].LastName;
-            if(Contacts[index].Gender == 1)
+            switch (Contacts[index].Gender)
             {
-                MRadioButton.IsChecked = true;
-                FRadioButton.IsChecked = false;
-            }
-            else if(Contacts[index].Gender == 2)
-            {
-                MRadioButton.IsChecked = false;
-                FRadioButton.IsChecked = true;
-            }
-            else
-            {
-                MRadioButton.IsChecked = false;
-                FRadioButton.IsChecked = false;
-            }
+                case 1:
+                    MRadioButton.IsChecked = true;
+                    FRadioButton.IsChecked = false;
+                    break;
+                case 2:
+                    MRadioButton.IsChecked = false;
+                    FRadioButton.IsChecked = true;
+                    break;
+                default:
+                    MRadioButton.IsChecked = false;
+                    FRadioButton.IsChecked = false;
+                    break;
 
-            ClearCount = index;
-            ClearButton.IsEnabled = true;
+            }
         }
 
         //clear Contact

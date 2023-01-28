@@ -14,4 +14,6 @@ namespace Kontaktspeicher
         public string LastName { get; set; }
         public byte Gender { get; set; }
     }
+
+
 }

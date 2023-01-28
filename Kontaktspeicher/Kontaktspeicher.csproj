@@ -98,10 +98,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="txtdata\contacts.txt" />
+    <Resource Include="img\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\logo.png" />
+    <Folder Include="txtdata\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
